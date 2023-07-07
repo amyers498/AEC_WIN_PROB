@@ -264,7 +264,7 @@ def main():
     st.header('Databose Bot')
     st.subheader(f'Database Comment: {ai_comment}')
     st.header("NOTES:")
-    st.write('Every variable on this page is given a "weight" including the variables such as state which is in direct correlation to industry and competitors. The datatbase bot compiles its information from a fake database of a 1000 points I created using a for loop python script. This is very rough around the edges but with the potential to pull from various data streams could be deemed useful.')
+    st.write('Every variable on this page is given a "weight" including the variables such as state which is in direct correlation to industry and competitors. The datatbase bot compiles its information from a fake database of a 1000 points I created using a for loop python script. This is very rough around the edges but with the potential to pull from various data streams could be deemed useful. Not to mention that a creation of a platform like this would be aliving breathing thing. Obviously the law of prediction in business states that forecasts are always wrong, but with more data, the gap between the forecast and the actual outcome closes. This is because more data allows forecasters to make more accurate predictions by identifying patterns and trends that would otherwise be invisible. ')
     st.markdown("[Link to the code on my GITHUB ](https://github.com/amyers498/AEC_WIN_PROB/blob/main/app.py)")
 if __name__ == '__main__':
     main()

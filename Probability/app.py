@@ -1,9 +1,5 @@
 import streamlit as st
-from transformers import pipeline
 import csv
-
-# Initialize sentiment analysis model from Hugging Face
-sentiment_analysis = pipeline("sentiment-analysis")
 
 # Define industry probabilities (adjust as needed)
 industry_probabilities = {
@@ -89,57 +85,57 @@ def calculate_win_probability(input_values, state):
 
     # Adjust win probability based on the state
     state_adjustments = {
-    'Alabama': 0.02,
-    'Alaska': -0.03,
-    'Arizona': 0.04,
-    'Arkansas': -0.02,
-    'California': 0.1,
-    'Colorado': -0.04,
-    'Connecticut': 0.03,
-    'Delaware': -0.01,
-    'Florida': 0.02,
-    'Georgia': -0.03,
-    'Hawaii': 0.04,
-    'Idaho': -0.02,
-    'Illinois': 0.03,
-    'Indiana': -0.01,
-    'Iowa': 0.02,
-    'Kansas': -0.03,
-    'Kentucky': 0.04,
-    'Louisiana': -0.02,
-    'Maine': 0.03,
-    'Maryland': -0.01,
-    'Massachusetts': 0.02,
-    'Michigan': -0.03,
-    'Minnesota': 0.04,
-    'Mississippi': -0.02,
-    'Missouri': 0.03,
-    'Montana': -0.01,
-    'Nebraska': 0.02,
-    'Nevada': -0.03,
-    'New Hampshire': 0.04,
-    'New Jersey': -0.02,
-    'New Mexico': 0.03,
-    'New York': -0.05,
-    'North Carolina': 0.01,
-    'North Dakota': -0.04,
-    'Ohio': 0.02,
-    'Oklahoma': -0.03,
-    'Oregon': 0.04,
-    'Pennsylvania': -0.02,
-    'Rhode Island': 0.03,
-    'South Carolina': -0.01,
-    'South Dakota': 0.02,
-    'Tennessee': -0.03,
-    'Texas': 0.05,
-    'Utah': -0.02,
-    'Vermont': 0.03,
-    'Virginia': -0.01,
-    'Washington': 0.02,
-    'West Virginia': -0.03,
-    'Wisconsin': 0.04,
-    'Wyoming': -0.02
-}
+        'Alabama': 0.02,
+        'Alaska': -0.03,
+        'Arizona': 0.04,
+        'Arkansas': -0.02,
+        'California': 0.1,
+        'Colorado': -0.04,
+        'Connecticut': 0.03,
+        'Delaware': -0.01,
+        'Florida': 0.02,
+        'Georgia': -0.03,
+        'Hawaii': 0.04,
+        'Idaho': -0.02,
+        'Illinois': 0.03,
+        'Indiana': -0.01,
+        'Iowa': 0.02,
+        'Kansas': -0.03,
+        'Kentucky': 0.04,
+        'Louisiana': -0.02,
+        'Maine': 0.03,
+        'Maryland': -0.01,
+        'Massachusetts': 0.02,
+        'Michigan': -0.03,
+        'Minnesota': 0.04,
+        'Mississippi': -0.02,
+        'Missouri': 0.03,
+        'Montana': -0.01,
+        'Nebraska': 0.02,
+        'Nevada': -0.03,
+        'New Hampshire': 0.04,
+        'New Jersey': -0.02,
+        'New Mexico': 0.03,
+        'New York': -0.05,
+        'North Carolina': 0.01,
+        'North Dakota': -0.04,
+        'Ohio': 0.02,
+        'Oklahoma': -0.03,
+        'Oregon': 0.04,
+        'Pennsylvania': -0.02,
+        'Rhode Island': 0.03,
+        'South Carolina': -0.01,
+        'South Dakota': 0.02,
+        'Tennessee': -0.03,
+        'Texas': 0.05,
+        'Utah': -0.02,
+        'Vermont': 0.03,
+        'Virginia': -0.01,
+        'Washington': 0.02,
+        'West Virginia': -0.03,
+        'Wisconsin': 0.04,
+        'Wyoming': -0.02
+    }
 
     state_adjustment = state_adjustments.get(state, 0)
     adjusted_score = normalized_score + state_adjustment
@@ -173,7 +169,7 @@ def main():
     st.set_page_config(page_title='AEC WIN PROB', layout='wide')
     st.title('AEC WIN PROB 1st CONCEPT')
 
-    # Define explanations and criteria for each category
+        # Define explanations and criteria for each category
     category_explanations = {
         'Past Performance': 'Evaluation of the company\'s past performance on similar projects. Higher scores indicate a more successful track record.',
         'Team Qualifications': 'Assessment of the qualifications and expertise of the project team. Higher scores indicate stronger qualifications.',
@@ -202,38 +198,18 @@ def main():
             input_values[category.lower().replace(' ', '_')] = st.slider(f'{category} (1-5)', 1, 5, 3)
 
     # Allow user to enter state with searchable dropdown
-    state = st.selectbox('State',         ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
-         'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-         'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-         'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
-         'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
-         'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-         'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'], index=0)
+    state = st.selectbox('State', list(state_adjustments.keys()))
 
-    # Calculate win probability based on input values and state
+    # Calculate win probability
     win_probability = calculate_win_probability(input_values, state)
 
-    # Perform sentiment analysis on the win probability comment
-    comment = f'The estimated win probability for the job is: {win_probability:.2f}%'
-    sentiment = sentiment_analysis(comment)[0]['label']
-
-    # Generate AI comment based on industry and state
+    # Generate AI comment
     ai_comment = generate_ai_comment(input_values['contract_industry'], state)
 
-    # Display the calculated win probability, sentiment, and AI comment
-    st.subheader('Win Probability')
-    if win_probability > 40:
-        st.write(f'{comment} (Positive)')
-    else:
-        st.write(f'{comment} (Negative)')
-
-    st.subheader('Database Bot Comment')
-    st.write(ai_comment)
-
-    # Display industry probabilities
-    st.sidebar.title('Industry Probabilities')
-    for industry, probability in industry_probabilities.items():
-        st.sidebar.write(f'{industry}: {probability * 100:.2f}%')
+    # Display results
+    st.subheader('Results')
+    st.write(f'Win Probability: {win_probability:.2f}%')
+    st.write(f'AI Comment: {ai_comment}')
 
 if __name__ == '__main__':
     main()

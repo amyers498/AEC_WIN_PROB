@@ -259,9 +259,10 @@ def main():
     ai_comment = generate_ai_comment(input_values['contract_industry'], state)
 
     # Display results
-    st.subheader('Results')
-    st.write(f'Win Probability: {win_probability:.2f}%')
-    st.write(f'AI Comment: {ai_comment}')
+    st.header('Results')
+    st.subheader(f'Win Probability: {win_probability:.2f}%')
+    st.header('Databose Bot')
+    st.subheader(f'Database Comment: {ai_comment}')
 
 if __name__ == '__main__':
     main()

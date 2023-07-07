@@ -265,7 +265,7 @@ def main():
     st.subheader(f'Database Comment: {ai_comment}')
     st.header("NOTES:")
     st.write('Every variable on this page is given a "weight" including the variables such as state which is in direct correlation to industry and competitors. The datatbase bot compiles its information from a fake database of a 1000 points I created using a for loop python script. This is very rough around the edges but with the potential to pull from various data streams could be deemed useful.')
-    st.markdown("[Link to the code on my GITHUB ](#https://github.com/amyers498/AEC_WIN_PROB/blob/main/app.py)")
+    st.markdown("[Link to the code on my GITHUB ](https://github.com/amyers498/AEC_WIN_PROB/blob/main/app.py)")
 if __name__ == '__main__':
     main()
 

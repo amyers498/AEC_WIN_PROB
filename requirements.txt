@@ -1,1 +1,2 @@
-streamlit==0.85.1
+streamlit
+click==8.0

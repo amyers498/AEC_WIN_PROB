@@ -201,7 +201,7 @@ def calculate_win_probability(input_values, state):
     return win_probability
 
 def generate_ai_comment(contract_industry, state):
-    with open('data.csv', 'r') as file:
+    with open('dummy.csv', 'r') as file:
         reader = csv.DictReader(file)
         filtered_data = [row for row in reader if row['State'] == state and row['Industry'] == contract_industry]
 
